@@ -10,17 +10,35 @@ a function to evolve it forward one step in time.
 _game of life_ rules suitable for injection
 into a `GridWorld`.
 
-`ConwayEvolver` also defines some famous patterns -
-heavyweight spaceship, Gosper's glider gun, etc. as
-easy to read multi-line strings.
+`ConwayEvolver` also defines some famous Conway GOL
+patterns as easy to edit multi-line strings.
+E.g. here's Gosper's glider gun:
 
-These patterns can be injected into a world as
-initial conditions or at any time step.
+```
+  static final gosperGliderGun = GridWorld.fromString('''
+......................................
+.........................#............
+.......................#.#............
+.............##......##............##.
+............#...#....##............##.
+.##........#.....#...##...............
+.##........#...#.##....#.#............
+...........#.....#.......#............
+............#...#.....................
+.............##.......................
+......................................
+''');
+```
 
-Printers are provided that print the world to
-a string, which in turn can be printed to stdout.
+Worlds can be built by sending these patterns
+into `GridWorld` composition methods.
 
-Terminal demo:
+Printers are provided that convert a `GridWorld`
+to a printable string, including strings
+that include ANSI escape sequences to animate
+the world on terminals.
+
+Demo:
 
 ```
 git clone git@github.com:monopole/grid_world.git
