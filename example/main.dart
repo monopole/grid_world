@@ -17,7 +17,7 @@ void movie(GridWorld w, int n) {
   }
 }
 
-main() {
+void main() {
   movie(ConwayEvolver.blinker, 30);
   movie(ConwayEvolver.toad, 40);
   movie(ConwayEvolver.rpentimino, 40);

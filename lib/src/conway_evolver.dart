@@ -1,11 +1,15 @@
+import 'evolver.dart';
 import 'grid_world.dart';
 
-// Conway's Game of Life rules.
+/// An [Evolver] that embodies Conway's Game of Life rules.
 class ConwayEvolver extends Evolver {
   // Avoid passing the world to all helper methods.
   GridWorld _w;
 
   @override
+
+  /// Returns true if the GridWorld cell at {i,j} should be alive
+  /// after the next time step.
   bool aliveAtNextStep(GridWorld w, int i, int j) {
     _w = w;
     int count = _neighborCountUpToFour(i, j);
@@ -28,7 +32,7 @@ class ConwayEvolver extends Evolver {
   // four, so there's no reason to count past four.
   int _neighborCountUpToFour(int i, int j) {
     int count = 0;
-    for (Function f in [
+    for (int Function(int, int) f in [
       _aboveLeft,
       _aboveSame,
       _aboveRight,
