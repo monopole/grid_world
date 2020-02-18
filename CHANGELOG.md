@@ -1,3 +1,7 @@
+## 0.1.0
+
+- Release v0.1.0 because why not?
+
 ## 0.0.3
 
 - Fix documentation nits.
