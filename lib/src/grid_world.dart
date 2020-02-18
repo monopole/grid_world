@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'grid_printer.dart';
-import 'grid_printer_plain.dart';
+import 'grid_stringer.dart';
+import 'grid_stringer_plain.dart';
 import 'evolver.dart';
 
 /// GridWorld holds a rectangular array of cells that can be alive or dead.
@@ -38,11 +38,11 @@ class GridWorld {
   bool customIsAlive(int Function(int, int) f, int i, int j) => _cells[f(i, j)];
 
   /// Return the world as a String using the given printer.
-  String asString(GridPrinter p) {
+  String asString(GridStringer p) {
     return p.asString(this);
   }
 
-  static final GridPrinter _defaultPrinter = GridPrinterPlain();
+  static final GridStringer _defaultPrinter = GridStringerPlain();
 
   /// Return the world as a string using a builtin printer.
   @override

@@ -7,7 +7,7 @@ void movie(GridWorld w, int n) {
   for (var i = 0; i < (w.nRows + 2); i++) {
     print("");
   }
-  final pr = GridPrinterAnsi();
+  final pr = GridStringerAnsi();
   print(pr.asString(w));
   final e = ConwayEvolver();
   for (int i = 0; i < n; i++) {

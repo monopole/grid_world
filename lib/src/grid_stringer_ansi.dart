@@ -1,11 +1,11 @@
-import 'grid_printer.dart';
+import 'grid_stringer.dart';
 import 'grid_world.dart';
 
-/// GridPrinterAnsi prints a [GridWorld] to a multi-line ANSI string.
+/// GridStringerAnsi converts a [GridWorld] to a multi-line ANSI string.
 ///
 /// The string includes ANSI terminal control sequences to paint.
 /// See: https://en.wikipedia.org/wiki/ANSI_escape_code#Unix-like_systems
-class GridPrinterAnsi extends GridPrinter {
+class GridStringerAnsi extends GridStringer {
   static const _csi = "\x1B[";
   static const _csiReset = _csi + "00m";
   static const _csiBlackBackground = _csi + "40m";
