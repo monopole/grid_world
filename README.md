@@ -2,15 +2,14 @@
 
 A dart implementation of Conway's game of life.
 
-`GridWorld` is an _NxM_ array of cells that can be alive or dead.
-It accepts an `Evolver` to evolve it forward one step in time.
+`GridWorld` is an _NxM_ grid of cells that can be alive or dead.
+A `GridWorld` accepts an `Evolver` to evolve it forward in time.
 
-The `ConwayEvolver` is an `Evolver` embodying Conway's
+A `ConwayEvolver` is an `Evolver` embodying Conway's
 _game of life_ rules.
 
-The `ConwayEvolver` also defines static strings representing
-famous Conway GOL patterns as multi-line strings,
-e.g. the Gosper glider gun:
+The `ConwayEvolver` also defines some static strings representing
+famous Conway GOL patterns, e.g. the Gosper glider gun:
 
 ```dart
   static final gosperGliderGun = GridWorld.fromString('''

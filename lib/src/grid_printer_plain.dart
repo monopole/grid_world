@@ -3,7 +3,6 @@ import 'grid_printer.dart';
 
 /// GridPrinterPlain prints a [GridWorld] to a multi-line string.
 class GridPrinterPlain extends GridPrinter {
-
   /// Returns the [GridWorld] as a string with nRows lines and nCols columns.
   @override
   String asString(GridWorld w) {

@@ -14,9 +14,9 @@ class GridWorld {
   // A true entry is alive, a false entry is not alive.
   final List<bool> _cells;
 
-
   /// Number of rows in the world.
   int get nRows => _numRows;
+
   /// Number of columns in the world.
   int get nCols => _numCols;
 
