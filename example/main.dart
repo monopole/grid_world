@@ -20,8 +20,7 @@ void movie(GridWorld w, int n) {
 void main() {
   movie(ConwayEvolver.blinker, 30);
   movie(ConwayEvolver.toad, 40);
-  movie(ConwayEvolver.rpentimino, 40);
-  movie(ConwayEvolver.indefinite, 40);
+  movie(ConwayEvolver.rPentimino, 40);
   movie(ConwayEvolver.pentaDecathlon.clockwise90(), 45);
   movie(ConwayEvolver.lightweightSpaceship.padRight(30).padBottom(1), 80);
   movie(ConwayEvolver.glider.padRight(22).padBottom(20), 60);

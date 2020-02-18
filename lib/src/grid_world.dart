@@ -4,8 +4,8 @@ import 'grid_printer.dart';
 import 'grid_printer_plain.dart';
 import 'evolver.dart';
 
-/// GridWorld holds a rectangular array of cells
-/// that can be alive or dead.
+/// GridWorld holds a rectangular array of cells that can be alive or dead.
+/// It accepts an [Evolver] to evolve the cells in discrete time steps.
 class GridWorld {
   // The world has fixed dimensions.
   final int _numRows;
@@ -14,7 +14,10 @@ class GridWorld {
   // A true entry is alive, a false entry is not alive.
   final List<bool> _cells;
 
+
+  /// Number of rows in the world.
   int get nRows => _numRows;
+  /// Number of columns in the world.
   int get nCols => _numCols;
 
   /// Constructor accepting a pre-defined cell list.
@@ -41,7 +44,7 @@ class GridWorld {
 
   static final GridPrinter _defaultPrinter = GridPrinterPlain();
 
-  /// Return the world as a string.
+  /// Return the world as a string using a builtin printer.
   @override
   String toString() {
     return asString(_defaultPrinter);
@@ -54,6 +57,7 @@ class GridWorld {
   static final chAlive = "#".codeUnitAt(0);
 
   /// fromString initializes a world from a multi-line string.
+  ///
   /// Argument should look like
   ///
   ///    ...#...
@@ -151,6 +155,7 @@ class GridWorld {
   }
 
   /// Paste the other world into this one.
+  ///
   /// The other world's {0,0} ends up at this world's {cI,cJ}.
   /// This world won't grow to fit.  If other world is too big or too far
   /// 'down' or 'right' it will overwrite cells due to boundary wrapping.
@@ -164,6 +169,7 @@ class GridWorld {
   }
 
   /// Copy this with the other world pasted in at the given location.
+  ///
   /// Result will be large enough to contain both.
   GridWorld paste(final int cI, final int cJ, final GridWorld other) {
     var w = GridWorld.empty(
@@ -202,6 +208,7 @@ class GridWorld {
   }
 
   /// Append the other world to the right of this one.
+  ///
   /// Fill empty lines as needed on the bottom of the
   /// shorter of the two.
   /// No attempt to center the shorter one.
@@ -210,6 +217,7 @@ class GridWorld {
   }
 
   /// Append the other world to the bottom of this one.
+  ///
   /// Fill empty columns as needed on the right of the
   /// thinner of the two.
   /// No attempt to center the thinner one.

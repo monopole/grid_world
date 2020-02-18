@@ -6,10 +6,9 @@ class ConwayEvolver extends Evolver {
   // Avoid passing the world to all helper methods.
   GridWorld _w;
 
-  @override
-
   /// Returns true if the GridWorld cell at {i,j} should be alive
   /// after the next time step.
+  @override
   bool aliveAtNextStep(GridWorld w, int i, int j) {
     _w = w;
     int count = _neighborCountUpToFour(i, j);
@@ -82,7 +81,7 @@ class ConwayEvolver extends Evolver {
 
   int _nextCol(int j) => (j + 1) % _w.nCols;
 
-  // This has a period of two.
+  /// Pattern with a period of two.
   static final blinker = GridWorld.fromString('''
 .....
 ..#..
@@ -91,7 +90,7 @@ class ConwayEvolver extends Evolver {
 .....
 ''');
 
-// This has a period of fifteen.
+  /// Pattern with a period of fifteen.
   static final pentaDecathlon = GridWorld.fromString('''
 ...........
 ...........
@@ -113,7 +112,7 @@ class ConwayEvolver extends Evolver {
 ...........
 ''');
 
-  // This moves to the right.
+  /// A spaceship that moves right.
   static final lightweightSpaceship = GridWorld.fromString('''
 .......
 .#..#..
@@ -123,7 +122,7 @@ class ConwayEvolver extends Evolver {
 .......
 ''');
 
-  // This moves down and right.
+  /// A glider that moves down and right.
   static final glider = GridWorld.fromString('''
 .......
 ...#...
@@ -132,7 +131,7 @@ class ConwayEvolver extends Evolver {
 .......
 ''');
 
-// This emits a glider every 15 iterations down and to the right.
+  /// Emits a glider every 15 iterations down and to the right.
   static final gosperGliderGun = GridWorld.fromString('''
 ......................................
 .........................#............
@@ -147,6 +146,7 @@ class ConwayEvolver extends Evolver {
 ......................................
 ''');
 
+  /// A stable pattern.
   static final toad = GridWorld.fromString('''
 ......
 ......
@@ -156,7 +156,8 @@ class ConwayEvolver extends Evolver {
 ......
 ''');
 
-  static final rpentimino = GridWorld.fromString('''
+  /// Stabilizes in generation 1103; emits a glider.
+  static final rPentimino = GridWorld.fromString('''
 .....
 ..##.
 .##..
@@ -164,22 +165,14 @@ class ConwayEvolver extends Evolver {
 .....
 ''');
 
-  static final indefinite = GridWorld.fromString('''
-.......
-.###.#.
-.#.....
-....##.
-..##.#.
-.#.#.#.
-.......
-''');
-
+  /// A glider fleet.
   static GridWorld gliderFleet() {
     final g = glider.padRight(3).padBottom(2);
     final w = g.appendRight(g).appendRight(g).appendRight(g).appendRight(g);
     return w.appendBottom(w.padLeft(3));
   }
 
+  /// A fight between two Gosper glider guns.
   static GridWorld gunFight() {
     var g1 = gosperGliderGun.padBottom(10).padRight(32);
     return g1.appendBottom(g1.clockwise90().clockwise90());

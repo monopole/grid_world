@@ -2,6 +2,7 @@ import 'grid_printer.dart';
 import 'grid_world.dart';
 
 /// GridPrinterAnsi prints a [GridWorld] to a multi-line ANSI string.
+///
 /// The string includes ANSI terminal control sequences to paint.
 /// See: https://en.wikipedia.org/wiki/ANSI_escape_code#Unix-like_systems
 class GridPrinterAnsi extends GridPrinter {
@@ -12,6 +13,7 @@ class GridPrinterAnsi extends GridPrinter {
   static const _fancyAlive = _csiCyanBackground + " " + _csiReset;
   static const _fancyDead = _csiBlackBackground + " " + _csiReset;
 
+  /// Returns the [GridWorld] as an ANSI animation.
   @override
   String asString(GridWorld w) {
     // Move cursor up.
