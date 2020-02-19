@@ -1,29 +1,38 @@
- import 'dart:io';
-
 import 'package:grid_world/grid_world.dart';
 
-void movie(GridWorld w, int n) {
-  // Make room on screen for ansi painting.
+/// Make room on terminal for ANSI painting.
+void clearScreen(GridWorld w) {
   for (var i = 0; i < (w.nRows + 2); i++) {
     print("");
   }
-  final pr = GridStringerAnsi();
-  print(pr.asString(w));
-  final e = ConwayEvolver();
-  for (int i = 0; i < n; i++) {
-    w.takeStep(e);
-    sleep(const Duration(milliseconds: 100));
-    print(pr.asString(w));
-  }
 }
 
+/// Tuple of a step count and a world.
+class Tup {
+  final int numSteps;
+  final GridWorld w;
+  Tup(int n, GridWorld w)
+      : numSteps = n,
+        w = w;
+}
+
+/// Demo various Conway Game of Life patterns.
 void main() {
-  movie(ConwayEvolver.blinker, 30);
-  movie(ConwayEvolver.toad, 40);
-  movie(ConwayEvolver.rPentimino, 40);
-  movie(ConwayEvolver.pentaDecathlon.clockwise90(), 45);
-  movie(ConwayEvolver.lightweightSpaceship.padRight(30).padBottom(1), 80);
-  movie(ConwayEvolver.glider.padRight(22).padBottom(20), 60);
-  movie(ConwayEvolver.gliderFleet(), 80);
-  movie(ConwayEvolver.gunFight(), 500);
+  final str = GridStringerAnsi();
+  final ev = ConwayEvolver();
+  const pause = Duration(milliseconds: 100);
+
+  for (Tup tup in [
+    Tup(30, ConwayEvolver.blinker),
+    Tup(40, ConwayEvolver.toad),
+    Tup(45, ConwayEvolver.pentaDecathlon.clockwise90()),
+    Tup(60, ConwayEvolver.lightweightSpaceship.padRight(30).padBottom(1)),
+    Tup(60, ConwayEvolver.glider.padRight(22).padBottom(20)),
+    Tup(80, ConwayEvolver.gliderFleet()),
+    Tup(100, ConwayEvolver.gunFight()),
+    Tup(1000, ConwayEvolver.rPentimino.padded(30)),
+  ]) {
+    clearScreen(tup.w);
+    tup.w.movie(tup.numSteps, str, ev, pause);
+  }
 }

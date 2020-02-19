@@ -1,11 +1,11 @@
 import 'dart:math';
+import 'dart:io';
 
 import 'grid_stringer.dart';
 import 'grid_stringer_plain.dart';
 import 'evolver.dart';
 
-/// GridWorld holds a rectangular array of cells that can be alive or dead.
-/// It accepts an [Evolver] to evolve the cells in discrete time steps.
+/// A grid of dead or alive cells that accepts an [Evolver].
 class GridWorld {
   // The world has fixed dimensions.
   final int _numRows;
@@ -60,19 +60,23 @@ class GridWorld {
   ///
   /// Argument should look like
   ///
+  /// ```
   ///    ...#...
   ///    ..#.#..
   ///    .#.#.#.
   ///    ...#...
   ///    ...#...
   ///    ...#...
+  /// ```
   ///
   /// The shape must be rectangular (not necessarily square).
   ///
   /// Cells are initialized per the rules
   ///
+  /// ```
   ///              '.': dead
   ///    anything else: alive
+  /// ```
   ///
   factory GridWorld.fromString(String x) {
     final rawLines = x.split('\n');
@@ -104,15 +108,15 @@ class GridWorld {
     return GridWorld(nR, list);
   }
 
-  /// Return an nRxnC world with all cells dead.
+  /// Return an nR x nC world with all cells dead.
   factory GridWorld.empty(int nR, int nC) {
     return GridWorld(nR, List<bool>.filled(nR * nC, false));
   }
 
-  /// Return a square world (side length nR) with diagonal elements alive.
-  factory GridWorld.identity(int nR) {
-    final w = GridWorld.empty(nR, nR);
-    for (int i = 0; i < nR; i++) {
+  /// Return a square world (side length n) with diagonal elements alive.
+  factory GridWorld.identity(int n) {
+    final w = GridWorld.empty(n, n);
+    for (int i = 0; i < n; i++) {
       w._cells[w.index(i, i)] = true;
     }
     return w;
@@ -179,6 +183,13 @@ class GridWorld {
     return w;
   }
 
+  /// Copy this, adding padding all around.
+  GridWorld padded(int n) {
+    var w = GridWorld.empty(_numRows + (2 * n), _numCols + (2 * n));
+    w._paste(n, n, this);
+    return w;
+  }
+
   /// Copy this, adding padding on left.
   GridWorld padLeft(int n) {
     var w = GridWorld.empty(_numRows, _numCols + n);
@@ -241,5 +252,19 @@ class GridWorld {
       }
     }
     _cells.setAll(0, newCells);
+  }
+
+  /// Print a movie to the terminal.
+  void movie(int numSteps, GridStringer stringer, Evolver ev, Duration pause) {
+    // Make room on terminal for ANSI painting.
+    for (var i = 0; i < (nRows + 2); i++) {
+      print("");
+    }
+    print(stringer.asString(this));
+    for (int i = 0; i < numSteps; i++) {
+      takeStep(ev);
+      sleep(pause);
+      print(stringer.asString(this));
+    }
   }
 }

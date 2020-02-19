@@ -1,3 +1,7 @@
+## 0.1.1
+
+- Fix some formatting in docs, add movie method to GridWorld.
+
 ## 0.1.0
 
 - Release v0.1.0 because why not?

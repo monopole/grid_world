@@ -1,10 +1,19 @@
-# Grid World
+# GridWorld
 
-A dart implementation of Conway's Game of Life.
+A set of classes for playing with Conway's Game of Life at the command line.
 
-`GridWorld` is an _NxM_ grid of cells that can be dead or alive.
+```
+git clone git@github.com:monopole/grid_world.git
+dart grid_world/example/main.dart
+```
 
+There are three primary classes: `GridWorld`, `Evolver` and `GridStringer`.
+
+### `GridWorld`
+
+A `GridWorld` is an _NxM_ grid of cells that can be dead or alive.
 A `GridWorld` can be constructed from
+
  * a multi-line string, e.g.
    ```
    .....
@@ -14,13 +23,16 @@ A `GridWorld` can be constructed from
    .....
    ```
    where `.` means _dead_, and anything else means _alive_.
+
  * other worlds pasted into or appended to each other.
+
+### `Evolver`
 
 A `GridWorld` accepts an `Evolver` to evolve it
 forward in time.
-A `ConwayEvolver` is an `Evolver` embodying Conway's
-_game of life_ rules.
 
+A `ConwayEvolver` is an `Evolver`
+embodying Conway's GOL rules.
 This evolver defines some small worlds
 containing famous GOL patterns,
 e.g. the _Gosper glider gun_:
@@ -41,18 +53,12 @@ e.g. the _Gosper glider gun_:
 ''');
 ```
 
-These small worlds can be rotated, flipped and combined to build larger worlds
-using `GridWorld` methods.
+### `GridStringer`
 
-A world can be converted to various strings using `GridStringer` helper classes.
+A world can be converted to a string using
+a `GridStringer`.
 
-The `GridStringerAnsi` class converts a world to a string with
-embedded ANSI escape sequences that can be used to create
-an animation on a terminal.
+`GridStringerAnsi` is a `GridStringer` that converts a world
+to a string with embedded ANSI escape sequences for
+animation on a terminal.
 
-Demo:
-
-```
-git clone git@github.com:monopole/grid_world.git
-dart grid_world/example/main.dart
-```
