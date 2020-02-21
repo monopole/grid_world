@@ -75,8 +75,8 @@ class GridWorld {
   ///
   /// Cells are initialized per the rules
   ///
-  ///   - '.': _dead_
-  ///   - anything else: _alive_
+  ///   - `'.'`: _ dead_
+  ///   - anything else: _ alive_
   ///
   factory GridWorld.fromString(String x) {
     final rawLines = x.split('\n');
