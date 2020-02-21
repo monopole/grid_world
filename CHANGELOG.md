@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Remove extraneous linefeed from movie.
+
 ## 0.1.1
 
 - Fix some formatting in docs, add movie method to GridWorld.
