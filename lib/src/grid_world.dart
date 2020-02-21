@@ -58,25 +58,25 @@ class GridWorld {
 
   /// fromString initializes a world from a multi-line string.
   ///
-  /// Argument should look like
+  /// The string argument should be a multi-line string like
   ///
   /// ```
-  ///    ...#...
-  ///    ..#.#..
-  ///    .#.#.#.
-  ///    ...#...
-  ///    ...#...
-  ///    ...#...
+  /// '''
+  /// ...#...
+  /// ..#.#..
+  /// .#.#.#.
+  /// ...#...
+  /// ...#...
+  /// ...#...
+  /// '''
   /// ```
   ///
   /// The shape must be rectangular (not necessarily square).
   ///
   /// Cells are initialized per the rules
   ///
-  /// ```
-  ///              '.': dead
-  ///    anything else: alive
-  /// ```
+  ///   - '.': _dead_
+  ///   - anything else: _alive_
   ///
   factory GridWorld.fromString(String x) {
     final rawLines = x.split('\n');
@@ -256,10 +256,6 @@ class GridWorld {
 
   /// Print a movie to the terminal.
   void movie(int numSteps, GridStringer stringer, Evolver ev, Duration pause) {
-    // Make room on terminal for ANSI painting.
-    for (var i = 0; i < (nRows + 2); i++) {
-      print("");
-    }
     print(stringer.asString(this));
     for (int i = 0; i < numSteps; i++) {
       takeStep(ev);

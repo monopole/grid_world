@@ -1,17 +1,18 @@
 # GridWorld
 
-A set of classes for playing with Conway's Game of Life at the command line.
+A set of [dart](https://dart.dev) classes for playing with
+Conway's Game of Life at the command line.
 
 ```
 git clone git@github.com:monopole/grid_world.git
 dart grid_world/example/main.dart
 ```
 
-There are three primary classes: `GridWorld`, `Evolver` and `GridStringer`.
+There are three primary interfaces: `GridWorld`, `Evolver` and `GridStringer`.
 
 ### `GridWorld`
 
-A `GridWorld` is an _NxM_ grid of cells that can be dead or alive.
+A `GridWorld` is a grid of cells that can be dead or alive.
 A `GridWorld` can be constructed from
 
  * a multi-line string, e.g.
@@ -31,14 +32,13 @@ A `GridWorld` can be constructed from
 A `GridWorld` accepts an `Evolver` to evolve it
 forward in time.
 
-A `ConwayEvolver` is an `Evolver`
-embodying Conway's GOL rules.
-This evolver defines some small worlds
-containing famous GOL patterns,
-e.g. the _Gosper glider gun_:
+A `ConwayEvolver` is an `Evolver` embodying Conway's
+GOL rules with wrap-around boundary conditions.
+This evolver defines some small worlds containing
+famous GOL patterns, e.g. the _Gosper glider gun_:
 
 ```dart
-  static final gosperGliderGun = GridWorld.fromString('''
+static final gosperGliderGun = GridWorld.fromString('''
 ......................................
 .........................#............
 .......................#.#............
