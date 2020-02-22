@@ -26,7 +26,16 @@ void main() {
   final _identity12 = GridWorld.identity(12);
 
   test('equals', () {
-    assert(_identity06 == GridWorld.identity(6));
+    final other = GridWorld.identity(6);
+    expect(_identity06, isNot(same(other)));
+    expect(_identity06, equals(other));
+    expect(_identity06, isNot(equals(other.clockwise90())));
+  });
+
+  test('hashCode', () {
+    final other = GridWorld.identity(6);
+    expect(_identity06.hashCode, equals(other.hashCode));
+    expect(_identity06, isNot(equals(other.clockwise90().hashCode)));
   });
 
   test('identity', () {

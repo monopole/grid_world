@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Add hashcode and equals to GridWorld.
+
 ## 0.1.2
 
 - Remove extraneous linefeed from movie.

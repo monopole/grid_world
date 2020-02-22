@@ -96,16 +96,15 @@ class GridWorld {
 
   @override
   bool operator ==(o) {
-    print("heer");
-    return o is GridWorld && o.nRows == nRows && _sameCells(o._cells);
+    return o is GridWorld && nRows == o.nRows && _sameCells(o._cells);
   }
 
-  bool _sameCells(final List<bool> other) {
-    if (other.length != _cells.length) {
+  bool _sameCells(final List<bool> o) {
+    if (o.length != _cells.length) {
       return false;
     }
     for (int i = 0; i < _cells.length; i++) {
-      if (other[i] != _cells[i]) {
+      if (o[i] != _cells[i]) {
         return false;
       }
     }
@@ -113,7 +112,15 @@ class GridWorld {
   }
 
   @override
-  int get hashCode => _cells.hashCode ^ nRows.hashCode;
+  int get hashCode => nRows.hashCode + _hashOfCells();
+
+  int _hashOfCells() {
+    int h = 0;
+    for (int i = 0; i < _cells.length; i++) {
+      h = 31 * h + (_cells[i] ? 1231 : 1237);
+    }
+    return h;
+  }
 
   /// Return an index into cells using {row,column} notation.
   int index(int i, int j) => (i * _numCols) + j;
