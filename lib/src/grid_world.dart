@@ -7,19 +7,6 @@ import 'evolver.dart';
 
 /// A grid of dead or alive cells that accepts an [Evolver].
 class GridWorld {
-  // The world has fixed dimensions.
-  final int _numRows;
-  final int _numCols;
-
-  // A true entry is alive, a false entry is not alive.
-  final List<bool> _cells;
-
-  /// Number of rows in the world.
-  int get nRows => _numRows;
-
-  /// Number of columns in the world.
-  int get nCols => _numCols;
-
   /// Constructor accepting a pre-defined cell list.
   /// Fails if the world isn't rectangular.
   GridWorld(int numRows, List<bool> cells)
@@ -27,34 +14,6 @@ class GridWorld {
         _numCols = cells.length ~/ numRows,
         _cells = cells,
         assert(cells.length == (numRows * (cells.length ~/ numRows)));
-
-  /// Return an index into cells using {row,column} notation.
-  int index(int i, int j) => (i * _numCols) + j;
-
-  /// Is the cell at {i,j} alive right now?
-  bool isAlive(int i, int j) => _cells[index(i, j)];
-
-  /// Is the cell at the mapped {i,j} location alive right now?
-  bool customIsAlive(int Function(int, int) f, int i, int j) => _cells[f(i, j)];
-
-  /// Return the world as a String using the given printer.
-  String asString(GridStringer p) {
-    return p.asString(this);
-  }
-
-  static final GridStringer _defaultPrinter = GridStringerPlain();
-
-  /// Return the world as a string using a builtin printer.
-  @override
-  String toString() {
-    return asString(_defaultPrinter);
-  }
-
-  /// Character representing a dead cell.
-  static final chDead = ".".codeUnitAt(0);
-
-  /// Character representing a live cell.
-  static final chAlive = "#".codeUnitAt(0);
 
   /// fromString initializes a world from a multi-line string.
   ///
@@ -121,6 +80,68 @@ class GridWorld {
     }
     return w;
   }
+
+  // The world has fixed dimensions.
+  final int _numRows;
+  final int _numCols;
+
+  // A true entry is alive, a false entry is not alive.
+  final List<bool> _cells;
+
+  /// Number of rows in the world.
+  int get nRows => _numRows;
+
+  /// Number of columns in the world.
+  int get nCols => _numCols;
+
+  @override
+  bool operator ==(o) {
+    print("heer");
+    return o is GridWorld && o.nRows == nRows && _sameCells(o._cells);
+  }
+
+  bool _sameCells(final List<bool> other) {
+    if (other.length != _cells.length) {
+      return false;
+    }
+    for (int i = 0; i < _cells.length; i++) {
+      if (other[i] != _cells[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  @override
+  int get hashCode => _cells.hashCode ^ nRows.hashCode;
+
+  /// Return an index into cells using {row,column} notation.
+  int index(int i, int j) => (i * _numCols) + j;
+
+  /// Is the cell at {i,j} alive right now?
+  bool isAlive(int i, int j) => _cells[index(i, j)];
+
+  /// Is the cell at the mapped {i,j} location alive right now?
+  bool customIsAlive(int Function(int, int) f, int i, int j) => _cells[f(i, j)];
+
+  /// Return the world as a String using the given printer.
+  String asString(GridStringer p) {
+    return p.asString(this);
+  }
+
+  static final GridStringer _defaultPrinter = GridStringerPlain();
+
+  /// Return the world as a string using a builtin printer.
+  @override
+  String toString() {
+    return asString(_defaultPrinter);
+  }
+
+  /// Character representing a dead cell.
+  static final chDead = ".".codeUnitAt(0);
+
+  /// Character representing a live cell.
+  static final chAlive = "#".codeUnitAt(0);
 
   /// Copy this as a transpose.
   GridWorld transpose() {

@@ -25,6 +25,10 @@ void main() {
   final _identity06 = GridWorld.identity(6);
   final _identity12 = GridWorld.identity(12);
 
+  test('equals', () {
+    assert(_identity06 == GridWorld.identity(6));
+  });
+
   test('identity', () {
     expect(_identity06.toString(), equals('''
 #.....
