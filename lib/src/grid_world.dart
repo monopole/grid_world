@@ -34,8 +34,8 @@ class GridWorld {
   ///
   /// Cells are initialized per the rules
   ///
-  ///   - `'.'`: _ dead_
-  ///   - anything else: _ alive_
+  ///   - `'.'`: dead
+  ///   - anything else: alive
   ///
   factory GridWorld.fromString(String x) {
     final rawLines = x.split('\n');
@@ -96,15 +96,18 @@ class GridWorld {
 
   @override
   bool operator ==(o) {
-    return o is GridWorld && nRows == o.nRows && _sameCells(o._cells);
+    if (identical(this, o)) {
+      return true;
+    }
+    return o is GridWorld && nRows == o.nRows && _cellsEqual(o._cells);
   }
 
-  bool _sameCells(final List<bool> o) {
-    if (o.length != _cells.length) {
+  bool _cellsEqual(final List<bool> o) {
+    if (_cells.length != o.length) {
       return false;
     }
     for (int i = 0; i < _cells.length; i++) {
-      if (o[i] != _cells[i]) {
+      if (_cells[i] != o[i]) {
         return false;
       }
     }
@@ -112,9 +115,9 @@ class GridWorld {
   }
 
   @override
-  int get hashCode => nRows.hashCode + _hashOfCells();
+  int get hashCode => nRows.hashCode + _cellsHashCode();
 
-  int _hashOfCells() {
+  int _cellsHashCode() {
     int h = 0;
     for (int i = 0; i < _cells.length; i++) {
       h = 31 * h + (_cells[i] ? 1231 : 1237);
