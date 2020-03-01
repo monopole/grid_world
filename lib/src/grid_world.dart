@@ -68,9 +68,8 @@ class GridWorld {
   }
 
   /// Return an nR x nC world with all cells dead.
-  factory GridWorld.empty(int nR, int nC) {
-    return GridWorld(nR, List<bool>.filled(nR * nC, false));
-  }
+  factory GridWorld.empty(int nR, int nC) =>
+      GridWorld(nR, List<bool>.filled(nR * nC, false));
 
   /// Return a square world (side length n) with diagonal elements alive.
   factory GridWorld.identity(int n) {
@@ -135,23 +134,22 @@ class GridWorld {
   bool customIsAlive(int Function(int, int) f, int i, int j) => _cells[f(i, j)];
 
   /// Return the world as a String using the given printer.
-  String asString(GridStringer p) {
-    return p.asString(this);
-  }
+  String asString(GridStringer p) => p.asString(this);
 
   static final GridStringer _defaultPrinter = GridStringerPlain();
 
   /// Return the world as a string using a builtin printer.
   @override
-  String toString() {
-    return asString(_defaultPrinter);
-  }
+  String toString() => asString(_defaultPrinter);
 
   /// Character representing a dead cell.
   static final chDead = ".".codeUnitAt(0);
 
   /// Character representing a live cell.
   static final chAlive = "#".codeUnitAt(0);
+
+  /// Copy this.
+  GridWorld copy() => GridWorld(_numRows, List<bool>.from(_cells));
 
   /// Copy this as a transpose.
   GridWorld transpose() {
@@ -206,66 +204,54 @@ class GridWorld {
   /// Copy this with the other world pasted in at the given location.
   ///
   /// Result will be large enough to contain both.
-  GridWorld paste(final int cI, final int cJ, final GridWorld other) {
-    var w = GridWorld.empty(
-        max(_numRows, cI + other.nRows), max(_numCols, cJ + other.nCols));
-    w._paste(0, 0, this);
-    w._paste(cI, cJ, other);
-    return w;
-  }
+  GridWorld paste(final int cI, final int cJ, final GridWorld other) =>
+      GridWorld.empty(
+          max(_numRows, cI + other.nRows), max(_numCols, cJ + other.nCols))
+        .._paste(0, 0, this)
+        .._paste(cI, cJ, other);
 
   /// Copy this, adding padding all around.
-  GridWorld padded(int n) {
-    var w = GridWorld.empty(_numRows + (2 * n), _numCols + (2 * n));
-    w._paste(n, n, this);
-    return w;
-  }
+  GridWorld padded(int n) =>
+      GridWorld.empty(_numRows + (2 * n), _numCols + (2 * n))
+        .._paste(n, n, this);
+
+  /// Copy this, adding padding on sides.
+  GridWorld lrPadded(int n) =>
+      GridWorld.empty(_numRows, _numCols + (2 * n)).._paste(0, n, this);
+
+  /// Copy this, adding padding on top and bottom.
+  GridWorld tbPadded(int n) =>
+      GridWorld.empty(_numRows + (2 * n), _numCols).._paste(n, 0, this);
 
   /// Copy this, adding padding on left.
-  GridWorld padLeft(int n) {
-    var w = GridWorld.empty(_numRows, _numCols + n);
-    w._paste(0, n, this);
-    return w;
-  }
+  GridWorld padLeft(int n) =>
+      GridWorld.empty(_numRows, _numCols + n).._paste(0, n, this);
 
   /// Copy this, adding padding on right.
-  GridWorld padRight(int n) {
-    var w = GridWorld.empty(_numRows, _numCols + n);
-    w._paste(0, 0, this);
-    return w;
-  }
+  GridWorld padRight(int n) =>
+      GridWorld.empty(_numRows, _numCols + n).._paste(0, 0, this);
 
   /// Copy this, adding padding on top.
-  GridWorld padTop(int n) {
-    var w = GridWorld.empty(_numRows + n, _numCols);
-    w._paste(n, 0, this);
-    return w;
-  }
+  GridWorld padTop(int n) =>
+      GridWorld.empty(_numRows + n, _numCols).._paste(n, 0, this);
 
   /// Copy this, adding padding on bottom.
-  GridWorld padBottom(int n) {
-    var w = GridWorld.empty(_numRows + n, _numCols);
-    w._paste(0, 0, this);
-    return w;
-  }
+  GridWorld padBottom(int n) =>
+      GridWorld.empty(_numRows + n, _numCols).._paste(0, 0, this);
 
   /// Append the other world to the right of this one.
   ///
   /// Fill empty lines as needed on the bottom of the
   /// shorter of the two.
   /// No attempt to center the shorter one.
-  GridWorld appendRight(GridWorld other) {
-    return paste(0, _numCols, other);
-  }
+  GridWorld appendRight(GridWorld other) => paste(0, _numCols, other);
 
   /// Append the other world to the bottom of this one.
   ///
   /// Fill empty columns as needed on the right of the
   /// thinner of the two.
   /// No attempt to center the thinner one.
-  GridWorld appendBottom(GridWorld other) {
-    return paste(_numRows, 0, other);
-  }
+  GridWorld appendBottom(GridWorld other) => paste(_numRows, 0, other);
 
   /// Take N life steps.
   void takeSteps(Evolver e, int n) {

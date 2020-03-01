@@ -1,6 +1,6 @@
 name: grid_world
 description: A toolkit for playing with Conway's Game of Life at the command line.
-version: 0.1.3
+version: 0.1.4
 homepage: https://github.com/monopole/grid_world
 
 environment:

@@ -1,3 +1,7 @@
+## 0.1.4
+
+- Add copy, tbPadded, lrPadded.
+
 ## 0.1.3
 
 - Add hashcode and equals to GridWorld.

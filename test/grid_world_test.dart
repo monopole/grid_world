@@ -178,6 +178,11 @@ void main() {
 '''));
   });
 
+  test('copy', () {
+    var w = _halfArrow.copy();
+    expect(w, equals(_halfArrow));
+  });
+  
   test('leftPadded', () {
     var w = _halfArrow.padLeft(2);
     expect(w.toString(), equals('''
@@ -202,6 +207,18 @@ void main() {
 '''));
   });
 
+  test('lrPadded', () {
+    var w = _halfArrow.lrPadded(2);
+    expect(w.toString(), equals('''
+....#....
+....##...
+....###..
+....#....
+....#....
+....#....
+'''));
+  });
+
   test('topPadded', () {
     var w = _halfArrow.padTop(2);
     expect(w.toString(), equals('''
@@ -219,6 +236,22 @@ void main() {
   test('bottomPadded', () {
     var w = _halfArrow.padBottom(2);
     expect(w.toString(), equals('''
+..#..
+..##.
+..###
+..#..
+..#..
+..#..
+.....
+.....
+'''));
+  });
+
+  test('tbPadded', () {
+    var w = _halfArrow.tbPadded(2);
+    expect(w.toString(), equals('''
+.....
+.....
 ..#..
 ..##.
 ..###
