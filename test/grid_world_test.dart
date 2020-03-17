@@ -182,7 +182,7 @@ void main() {
     var w = _halfArrow.copy();
     expect(w, equals(_halfArrow));
   });
-  
+
   test('leftPadded', () {
     var w = _halfArrow.padLeft(2);
     expect(w.toString(), equals('''
@@ -432,6 +432,72 @@ void main() {
 ######..#....
 ........#....
 .............
+'''));
+  });
+
+  final blinker = GridWorld.fromString('''
+.....
+..#..
+..#..
+..#..
+.....
+''');
+
+  /// Check a three step iterable.
+  test('gridworlditerable1', () {
+    var itr = GridWorldIterable(blinker, limit: 3).iterator;
+    assert(itr.moveNext());
+    expect(itr.current.toString(), equals('''
+.....
+..#..
+..#..
+..#..
+.....
+'''));
+    assert(itr.moveNext());
+    expect(itr.current.toString(), equals('''
+.....
+.....
+.###.
+.....
+.....
+'''));
+    assert(itr.moveNext());
+    expect(itr.current.toString(), equals('''
+.....
+..#..
+..#..
+..#..
+.....
+'''));
+    assert(!itr.moveNext());
+  });
+
+  /// Another iterable check, this time with snapshots to make a list.
+  test('gridworlditerable2', () {
+    List<GridWorld> list = List<GridWorld>.from(
+        GridWorldIterable(blinker, limit: 3, snapshots: true));
+    expect(list.length, equals(3));
+    expect(list[0].toString(), equals('''
+.....
+..#..
+..#..
+..#..
+.....
+'''));
+    expect(list[1].toString(), equals('''
+.....
+.....
+.###.
+.....
+.....
+'''));
+    expect(list[2].toString(), equals('''
+.....
+..#..
+..#..
+..#..
+.....
 '''));
   });
 }

@@ -1,3 +1,7 @@
+## 0.1.5
+
+- GridWorldIterable.
+
 ## 0.1.4
 
 - Add copy, tbPadded, lrPadded.

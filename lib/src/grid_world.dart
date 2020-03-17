@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'dart:io';
-
 import 'grid_stringer.dart';
 import 'grid_stringer_plain.dart';
 import 'evolver.dart';
@@ -272,6 +271,8 @@ class GridWorld {
   }
 
   /// Print a movie to the terminal.
+  /// TODO: This doesn't belong here, and should be implemnted using
+  /// a GridWOrldITerable.
   void movie(int numSteps, GridStringer stringer, Evolver ev, Duration pause) {
     print(stringer.asString(this));
     for (int i = 0; i < numSteps; i++) {
