@@ -1,4 +1,5 @@
 import 'package:grid_world/grid_world.dart';
+import 'dart:io';
 
 /// Make room on terminal for ANSI painting.
 void clearScreen(GridWorld w) {
@@ -33,6 +34,9 @@ void main() {
     Tup(1000, ConwayEvolver.rPentimino.padded(30)),
   ]) {
     clearScreen(tup.w);
-    tup.w.movie(tup.numSteps, str, ev, pause);
+    for (var w in GridWorldIterable(tup.w, limit: tup.numSteps)) {
+      print(str.asString(w));
+      sleep(pause);
+    }
   }
 }

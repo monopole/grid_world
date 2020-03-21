@@ -1,3 +1,7 @@
+## 0.1.6
+
+- expandToFit.
+
 ## 0.1.5
 
 - GridWorldIterable.

@@ -2,7 +2,7 @@ import 'package:grid_world/grid_world.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final _halfArrow = GridWorld.fromString('''
+  final halfArrow = GridWorld.fromString('''
 ..#..
 ..##.
 ..###
@@ -11,8 +11,16 @@ void main() {
 ..#..
 ''');
 
+  final blinker = GridWorld.fromString('''
+.....
+..#..
+..#..
+..#..
+.....
+''');
+
   test('construction from string', () {
-    expect(_halfArrow.toString(), equals('''
+    expect(halfArrow.toString(), equals('''
 ..#..
 ..##.
 ..###
@@ -50,7 +58,7 @@ void main() {
   });
 
   test('paste', () {
-    var w = _identity12.paste(0, 0, _halfArrow);
+    var w = _identity12.paste(0, 0, halfArrow);
     expect(w.toString(), equals('''
 ..#.........
 ..##........
@@ -65,7 +73,7 @@ void main() {
 ..........#.
 ...........#
 '''));
-    w = _identity12.paste(0, 3, _halfArrow);
+    w = _identity12.paste(0, 3, halfArrow);
     expect(w.toString(), equals('''
 #....#......
 .#...##.....
@@ -80,7 +88,7 @@ void main() {
 ..........#.
 ...........#
 '''));
-    w = _identity12.paste(4, 4, _halfArrow);
+    w = _identity12.paste(4, 4, halfArrow);
     expect(w.toString(), equals('''
 #...........
 .#..........
@@ -95,7 +103,7 @@ void main() {
 ..........#.
 ...........#
 '''));
-    w = _identity12.paste(12, 12, _halfArrow);
+    w = _identity12.paste(12, 12, halfArrow);
     expect(w.toString(), equals('''
 #................
 .#...............
@@ -119,7 +127,7 @@ void main() {
   });
 
   test('counterClockwise90', () {
-    var w = _halfArrow.counterClockwise90();
+    var w = halfArrow.counterClockwise90();
     expect(w.toString(), equals('''
 ..#...
 .##...
@@ -133,11 +141,11 @@ void main() {
             .counterClockwise90()
             .counterClockwise90()
             .toString(),
-        equals(_halfArrow.toString()));
+        equals(halfArrow.toString()));
   });
 
   test('clockwise90', () {
-    var w = _halfArrow.clockwise90();
+    var w = halfArrow.clockwise90();
     expect(w.toString(), equals('''
 ......
 ......
@@ -146,11 +154,11 @@ void main() {
 ...#..
 '''));
     expect(w.clockwise90().clockwise90().clockwise90().toString(),
-        equals(_halfArrow.toString()));
+        equals(halfArrow.toString()));
   });
 
   test('transpose', () {
-    var w = _halfArrow.transpose();
+    var w = halfArrow.transpose();
     expect(w.toString(), equals('''
 ......
 ......
@@ -179,12 +187,12 @@ void main() {
   });
 
   test('copy', () {
-    var w = _halfArrow.copy();
-    expect(w, equals(_halfArrow));
+    var w = halfArrow.copy();
+    expect(w, equals(halfArrow));
   });
 
   test('leftPadded', () {
-    var w = _halfArrow.padLeft(2);
+    var w = halfArrow.padLeft(2);
     expect(w.toString(), equals('''
 ....#..
 ....##.
@@ -196,7 +204,7 @@ void main() {
   });
 
   test('rightPadded', () {
-    var w = _halfArrow.padRight(2);
+    var w = halfArrow.padRight(2);
     expect(w.toString(), equals('''
 ..#....
 ..##...
@@ -208,7 +216,7 @@ void main() {
   });
 
   test('lrPadded', () {
-    var w = _halfArrow.lrPadded(2);
+    var w = halfArrow.lrPadded(2);
     expect(w.toString(), equals('''
 ....#....
 ....##...
@@ -220,7 +228,7 @@ void main() {
   });
 
   test('topPadded', () {
-    var w = _halfArrow.padTop(2);
+    var w = halfArrow.padTop(2);
     expect(w.toString(), equals('''
 .....
 .....
@@ -234,7 +242,7 @@ void main() {
   });
 
   test('bottomPadded', () {
-    var w = _halfArrow.padBottom(2);
+    var w = halfArrow.padBottom(2);
     expect(w.toString(), equals('''
 ..#..
 ..##.
@@ -248,7 +256,7 @@ void main() {
   });
 
   test('tbPadded', () {
-    var w = _halfArrow.tbPadded(2);
+    var w = halfArrow.tbPadded(2);
     expect(w.toString(), equals('''
 .....
 .....
@@ -264,7 +272,7 @@ void main() {
   });
 
   test('padded', () {
-    var w = _halfArrow.padded(3);
+    var w = halfArrow.padded(3);
     expect(w.toString(), equals('''
 ...........
 ...........
@@ -281,8 +289,67 @@ void main() {
 '''));
   });
 
+  test('expandToFit0', () {
+    var w = blinker.expandToFit(blinker.nCols, blinker.nRows);
+    expect(w, equals(blinker));
+  });
+
+  test('expandToFit1', () {
+    expect(
+          () => blinker.expandToFit(blinker.nCols, blinker.nRows-1),
+      throwsA(
+        isA<ArgumentError>().having(
+              (error) => error.message,
+          'should throw if world too tall',
+          'world too tall (5) to expand into 4',
+        ),
+      ),
+    );
+    expect(
+          () => blinker.expandToFit(blinker.nCols-1, blinker.nRows),
+      throwsA(
+        isA<ArgumentError>().having(
+              (error) => error.message,
+          'should throw if world too wide',
+          'world too wide (5) to expand into 4',
+        ),
+      ),
+    );
+  });
+
+  test('expandToFit2', () {
+    var w = blinker.expandToFit(8, 13);
+    expect(w.toString(), equals('''
+........
+........
+........
+........
+........
+...#....
+...#....
+...#....
+........
+........
+........
+........
+........
+'''));
+  });
+
+  test('expandToFit3', () {
+    var w = blinker.expandToFit(5, 6);
+    expect(w.toString(), equals('''
+.....
+..#..
+..#..
+..#..
+.....
+.....
+'''));
+  });
+
   test('append', () {
-    var w = _halfArrow;
+    var w = halfArrow;
     w = w.appendRight(w).appendRight(w).appendRight(w);
     expect(w.toString(), equals('''
 ..#....#....#....#..
@@ -309,7 +376,7 @@ void main() {
   });
 
   test('irregularAppendRight', () {
-    var w = _halfArrow;
+    var w = halfArrow;
     w = w.appendRight(w.padTop(3));
     expect(w.toString(), equals('''
 ..#.......
@@ -325,7 +392,7 @@ void main() {
   });
 
   test('irregularAppendBottom', () {
-    var w = _halfArrow;
+    var w = halfArrow;
     w = w.appendRight(w).appendRight(w);
     w = w.appendBottom(w.padLeft(3));
     expect(w.toString(), equals('''
@@ -364,7 +431,7 @@ void main() {
   });
 
   test('mixItUp1', () {
-    var r1 = _halfArrow.padLeft(2).padTop(2).padBottom(3).padRight(10);
+    var r1 = halfArrow.padLeft(2).padTop(2).padBottom(3).padRight(10);
     var r2 = r1.clockwise90().clockwise90();
     var w = r1.appendBottom(r2);
     expect(w.toString(), equals('''
@@ -413,7 +480,7 @@ void main() {
   });
 
   test('mixItUp2', () {
-    var w = _halfArrow.padRight(2);
+    var w = halfArrow.padRight(2);
     var w1 = w.appendRight(w.clockwise90());
     var w2 = w.counterClockwise90().appendRight(w);
     w = w1.appendBottom(w2);
@@ -434,14 +501,6 @@ void main() {
 .............
 '''));
   });
-
-  final blinker = GridWorld.fromString('''
-.....
-..#..
-..#..
-..#..
-.....
-''');
 
   /// Check a three step iterable.
   test('gridworlditerable1', () {

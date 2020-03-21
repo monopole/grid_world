@@ -1,8 +1,8 @@
 import 'dart:math';
-import 'dart:io';
 import 'grid_stringer.dart';
 import 'grid_stringer_plain.dart';
 import 'evolver.dart';
+import 'package:tuple/tuple.dart';
 
 /// A grid of dead or alive cells that accepts an [Evolver].
 class GridWorld {
@@ -252,6 +252,33 @@ class GridWorld {
   /// No attempt to center the thinner one.
   GridWorld appendBottom(GridWorld other) => paste(_numRows, 0, other);
 
+  /// Copy this, expanding to fit.
+  /// Throws exception if world is already too big to fit.
+  GridWorld expandToFit(int width, int height) {
+    if (_numCols > width) {
+      throw ArgumentError("world too wide ($_numCols) to expand into $width");
+    }
+    if (_numRows > height) {
+      throw ArgumentError("world too tall ($_numRows) to expand into $height");
+    }
+    final padW = _padding(width, _numCols);
+    final padH = _padding(height, _numRows);
+    return padLeft(padW.item1)
+        .padRight(padW.item2)
+        .padTop(padH.item1)
+        .padBottom(padH.item2);
+  }
+
+  /// Fit actual into limit, with padding on both sides.
+  static Tuple2<int, int> _padding(int limit, int actual) {
+    final int diff = limit - actual;
+    assert(diff >= 0);
+    final int half = diff ~/ 2;
+    return (diff % 2 == 0)
+        ? Tuple2<int, int>(half, half)
+        : Tuple2<int, int>(half, half + 1);
+  }
+
   /// Take N life steps.
   void takeSteps(Evolver e, int n) {
     for (int i = 0; i < n; i++) {
@@ -268,17 +295,5 @@ class GridWorld {
       }
     }
     _cells.setAll(0, newCells);
-  }
-
-  /// Print a movie to the terminal.
-  /// TODO: This doesn't belong here, and should be implemnted using
-  /// a GridWOrldITerable.
-  void movie(int numSteps, GridStringer stringer, Evolver ev, Duration pause) {
-    print(stringer.asString(this));
-    for (int i = 0; i < numSteps; i++) {
-      takeStep(ev);
-      sleep(pause);
-      print(stringer.asString(this));
-    }
   }
 }
