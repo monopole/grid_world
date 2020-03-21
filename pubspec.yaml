@@ -1,6 +1,6 @@
 name: grid_world
 description: A toolkit for playing with Conway's Game of Life.
-version: 0.1.6
+version: 0.1.7
 homepage: https://github.com/monopole/grid_world
 
 environment:
@@ -12,3 +12,6 @@ dev_dependencies:
 dependencies:
   test: ^1.9.4
   tuple: ^1.0.3
+
+executables:
+  gol_movie:

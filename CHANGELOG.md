@@ -1,10 +1,14 @@
+## 0.1.7
+
+- Add a bin directory, see if it works.
+
 ## 0.1.6
 
-- expandToFit.
+- Add expandToFit.
 
 ## 0.1.5
 
-- GridWorldIterable.
+- Add GridWorldIterable.
 
 ## 0.1.4
 

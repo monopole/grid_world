@@ -4,10 +4,15 @@ Conway's Game of Life as an API.
 
 ```
 git clone git@github.com:monopole/grid_world.git
-dart grid_world/example/main.dart
+dart grid_world/example/gol_movie.dart
+```
+or
+```
+pub global activate grid_world/grid_world.dart
+gol_movie
 ```
 
-The API has three interfaces: `GridWorld`, `Evolver` and `GridStringer`.
+The primary interfaces are as follows:
 
 ### `GridWorld`
 
@@ -58,6 +63,17 @@ static final gosperGliderGun = GridWorld.fromString('''
 .............##.......................
 ......................................
 ''');
+```
+
+### `GridWorldIterable`
+
+Extending `Iterable<GridWorld>`, this object combines a `GridWorld` and
+an `Evolver` such that one may evolve a world in an iteration context, e.g.
+
+```dart
+for (var w in GridWorldIterable(initialWorld, limit: 1000)) {
+  render(w);
+}
 ```
 
 ### `GridStringer`

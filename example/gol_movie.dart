@@ -3,7 +3,7 @@ import 'dart:io';
 
 /// Make room on terminal for ANSI painting.
 void clearScreen(GridWorld w) {
-  for (var i = 0; i < (w.nRows + 2); i++) {
+  for (var i = 0; i < w.nRows + 2; i++) {
     print("");
   }
 }
@@ -20,7 +20,6 @@ class Tup {
 /// Demo various Conway Game of Life patterns.
 void main() {
   final str = GridStringerAnsi();
-  final ev = ConwayEvolver();
   const pause = Duration(milliseconds: 100);
 
   for (Tup tup in [
