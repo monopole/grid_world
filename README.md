@@ -1,15 +1,11 @@
 # GridWorld
 
-Conway's Game of Life as an API.
+A cellular automaton library associated with a square grid.  Includes Conway's Game of Life.
 
+#### Demo
 ```
 git clone git@github.com:monopole/grid_world.git
-dart grid_world/example/gol_movie.dart
-```
-or
-```
-pub global activate grid_world/grid_world.dart
-gol_movie
+dart grid_world/example/main.dart
 ```
 
 The primary interfaces are as follows:

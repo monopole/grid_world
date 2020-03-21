@@ -1,6 +1,6 @@
 name: grid_world
 description: A cellular automaton library associated with a square grid.  Includes Conway's Game of Life.
-version: 0.1.9
+version: 0.1.10
 homepage: https://github.com/monopole/grid_world
 
 environment:

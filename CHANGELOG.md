@@ -1,3 +1,7 @@
+## 0.1.10
+
+- Fix readme.
+
 ## 0.1.9
 
 - Fix package description.
