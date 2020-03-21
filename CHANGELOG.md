@@ -1,6 +1,10 @@
+## 0.1.8
+
+- Nope!
+
 ## 0.1.7
 
-- Add a bin directory, see if it works.
+- Add a bin directory, symlinked to example, see if it works under 'pub global run'.
 
 ## 0.1.6
 
