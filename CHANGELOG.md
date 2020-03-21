@@ -1,3 +1,7 @@
+## 0.1.9
+
+- Fix package description.
+
 ## 0.1.8
 
 - Nope!
