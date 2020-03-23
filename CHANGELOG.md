@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Typo, blah
+
 ## 1.0.0
 
 - Fix lints, start stable release.

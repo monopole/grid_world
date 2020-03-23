@@ -14,11 +14,6 @@ pub run test
 dart example/main.dart
 ```
 
-#### Run tests
-
-```bash
-```
-
 ## Primary interfaces
  
 ### `GridWorld`
