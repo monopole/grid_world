@@ -5,8 +5,6 @@
 It includes Conway's Game of Life evolution rules, and some classic
 Conway patterns ready for injection.
 
-#### Demo
-
 ```bash
 git clone git@github.com:monopole/grid_world.git
 cd grid_world
