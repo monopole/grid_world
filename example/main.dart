@@ -1,20 +1,19 @@
-import 'package:grid_world/grid_world.dart';
 import 'dart:io';
+import 'package:grid_world/grid_world.dart';
 
 /// Make room on terminal for ANSI painting.
 void clearScreen(GridWorld w) {
   for (var i = 0; i < w.nRows + 2; i++) {
-    print("");
+    // ignore: avoid_print
+    print('');
   }
 }
 
 /// Tuple of a step count and a world.
 class Tup {
+  Tup(this.numSteps, this.w);
   final int numSteps;
   final GridWorld w;
-  Tup(int n, GridWorld w)
-      : numSteps = n,
-        w = w;
 }
 
 /// Demo various Conway Game of Life patterns.
@@ -22,7 +21,7 @@ void main() {
   final str = GridStringerAnsi();
   const pause = Duration(milliseconds: 100);
 
-  for (Tup tup in [
+  for (final tup in [
     Tup(30, ConwayEvolver.blinker),
     Tup(40, ConwayEvolver.toad),
     Tup(45, ConwayEvolver.pentaDecathlon.clockwise90()),
@@ -33,7 +32,8 @@ void main() {
     Tup(1000, ConwayEvolver.rPentimino.padded(30)),
   ]) {
     clearScreen(tup.w);
-    for (var w in GridWorldIterable(tup.w, limit: tup.numSteps)) {
+    for (final w in GridWorldIterable(tup.w, limit: tup.numSteps)) {
+      // ignore: avoid_print
       print(str.asString(w));
       sleep(pause);
     }

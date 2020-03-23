@@ -5,16 +5,14 @@ void main() {
   final e = ConwayEvolver();
 
   test('a single lonely cell dies', () {
-    var w = GridWorld.fromString('''
+    // Verify it doesn't survive one step.
+    final w = GridWorld.fromString('''
 .....
 .....
 ..#..
 .....
 .....
-''');
-
-    // Verify it doesn't survive one step.
-    w.takeStep(e);
+''')..takeStep(e);
     expect(w.toString(), equals('''
 .....
 .....
@@ -35,7 +33,7 @@ void main() {
   });
 
   test('blinker', () {
-    var w = ConwayEvolver.blinker;
+    final w = ConwayEvolver.blinker;
     expect(w.toString(), equals('''
 .....
 ..#..
@@ -62,7 +60,7 @@ void main() {
   });
 
   test('pentaDecathlon', () {
-    var w = ConwayEvolver.pentaDecathlon;
+    final w = ConwayEvolver.pentaDecathlon;
     expect(w.toString(), equals('''
 ...........
 ...........
@@ -133,7 +131,7 @@ void main() {
   });
 
   test('lightwieghtSpaceship', () {
-    var w = ConwayEvolver.lightweightSpaceship.padRight(30);
+    final w = ConwayEvolver.lightweightSpaceship.padRight(30);
     expect(w.toString(), equals('''
 .....................................
 .#..#................................
@@ -186,7 +184,8 @@ void main() {
   });
 
   test('glider', () {
-    var w = ConwayEvolver.glider.padBottom(1).padTop(1).padLeft(1).padRight(1);
+    final w =
+        ConwayEvolver.glider.padBottom(1).padTop(1).padLeft(1).padRight(1);
     expect(w.toString(), equals('''
 .........
 .........
@@ -234,12 +233,12 @@ void main() {
 
   // Show how the gun works.
   test('gliderGun', () {
-    var w = ConwayEvolver.gosperGliderGun
+    final w = ConwayEvolver.gosperGliderGun
         .padLeft(2)
         .padTop(2)
         .padBottom(46)
-        .padRight(33);
-    w.takeSteps(e, 200);
+        .padRight(33)
+          ..takeSteps(e, 200);
     expect(w.toString(), equals('''
 .........................................................................
 .........................................................................
@@ -305,8 +304,7 @@ void main() {
 
   // Shoot two guns at each other.
   test('gunFight', () {
-    var w = ConwayEvolver.gunFight();
-    w.takeSteps(e, 150);
+    final w = ConwayEvolver.gunFight()..takeSteps(e, 150);
     expect(w.toString(), equals('''
 ......................................................................
 .........................#............................................

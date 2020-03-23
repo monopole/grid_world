@@ -1,8 +1,8 @@
 import 'dart:math';
+import 'package:tuple/tuple.dart';
+import 'evolver.dart';
 import 'grid_stringer.dart';
 import 'grid_stringer_plain.dart';
-import 'evolver.dart';
-import 'package:tuple/tuple.dart';
 
 /// A grid of dead or alive cells that accepts an [Evolver].
 class GridWorld {
@@ -12,7 +12,8 @@ class GridWorld {
       : _numRows = numRows,
         _numCols = cells.length ~/ numRows,
         _cells = cells,
-        assert(cells.length == (numRows * (cells.length ~/ numRows)));
+        assert(cells.length == (numRows * (cells.length ~/ numRows)),
+            'world must be rectangular');
 
   /// fromString initializes a world from a multi-line string.
   ///
@@ -38,31 +39,31 @@ class GridWorld {
   ///
   factory GridWorld.fromString(String x) {
     final rawLines = x.split('\n');
-    var lines = List<List<int>>();
-    rawLines.forEach((line) {
+    final lines = List<List<int>>();
+    for (final line in rawLines) {
       if (line.isNotEmpty) {
         lines.add(line.codeUnits);
       }
-    });
+    }
     if (lines.length < 2) {
-      throw 'must supply at least two lines';
+      throw ArgumentError('must supply at least two lines');
     }
     final nR = lines.length;
     final nC = lines[0].length;
-    for (int i = 1; i < lines.length; i++) {
+    for (var i = 1; i < lines.length; i++) {
       if (lines[i].length != nC) {
-        throw 'length (${lines[i].length}) of line $i must ' +
-            'match length ($nC) of first line';
+        throw ArgumentError('length (${lines[i].length}) of line $i must '
+            'match length ($nC) of first line');
       }
     }
     final list = List<bool>(nR * nC);
-    int k = 0;
-    lines.forEach((line) {
-      line.forEach((ch) {
-        list[k] = (ch != GridWorld.chDead);
+    var k = 0;
+    for (final line in lines) {
+      for (final ch in line) {
+        list[k] = ch != GridWorld.chDead;
         k++;
-      });
-    });
+      }
+    }
     return GridWorld(nR, list);
   }
 
@@ -73,7 +74,7 @@ class GridWorld {
   /// Return a square world (side length n) with diagonal elements alive.
   factory GridWorld.identity(int n) {
     final w = GridWorld.empty(n, n);
-    for (int i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
       w._cells[w.index(i, i)] = true;
     }
     return w;
@@ -93,18 +94,21 @@ class GridWorld {
   int get nCols => _numCols;
 
   @override
-  bool operator ==(o) {
-    if (identical(this, o)) {
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(dynamic other) {
+    if (identical(this, other)) {
       return true;
     }
-    return o is GridWorld && nRows == o.nRows && _cellsEqual(o._cells);
+    return other is GridWorld &&
+        nRows == other.nRows &&
+        _cellsEqual(other._cells);
   }
 
   bool _cellsEqual(final List<bool> o) {
     if (_cells.length != o.length) {
       return false;
     }
-    for (int i = 0; i < _cells.length; i++) {
+    for (var i = 0; i < _cells.length; i++) {
       if (_cells[i] != o[i]) {
         return false;
       }
@@ -113,11 +117,12 @@ class GridWorld {
   }
 
   @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode => nRows.hashCode + _cellsHashCode();
 
   int _cellsHashCode() {
-    int h = 0;
-    for (int i = 0; i < _cells.length; i++) {
+    var h = 0;
+    for (var i = 0; i < _cells.length; i++) {
       h = 31 * h + (_cells[i] ? 1231 : 1237);
     }
     return h;
@@ -142,10 +147,10 @@ class GridWorld {
   String toString() => asString(_defaultPrinter);
 
   /// Character representing a dead cell.
-  static final chDead = ".".codeUnitAt(0);
+  static final int chDead = '.'.codeUnitAt(0);
 
   /// Character representing a live cell.
-  static final chAlive = "#".codeUnitAt(0);
+  static final int chAlive = '#'.codeUnitAt(0);
 
   /// Copy this.
   GridWorld copy() => GridWorld(_numRows, List<bool>.from(_cells));
@@ -153,9 +158,9 @@ class GridWorld {
   /// Copy this as a transpose.
   GridWorld transpose() {
     final newCells = List<bool>(_numRows * _numCols);
-    final newIndex = (int j, int i) => (j * _numRows) + i;
-    for (int i = 0; i < _numRows; i++) {
-      for (int j = 0; j < _numCols; j++) {
+    int newIndex(int j, int i) => (j * _numRows) + i;
+    for (var i = 0; i < _numRows; i++) {
+      for (var j = 0; j < _numCols; j++) {
         newCells[newIndex(j, i)] = isAlive(i, j);
       }
     }
@@ -165,9 +170,9 @@ class GridWorld {
   /// Copy this as a clockwise 90 degree rotation.
   GridWorld clockwise90() {
     final newCells = List<bool>(_numRows * _numCols);
-    final newIndex = (int i, int j) => (j * _numRows) + (_numRows - 1 - i);
-    for (int i = 0; i < _numRows; i++) {
-      for (int j = 0; j < _numCols; j++) {
+    int newIndex(int i, int j) => (j * _numRows) + (_numRows - 1 - i);
+    for (var i = 0; i < _numRows; i++) {
+      for (var j = 0; j < _numCols; j++) {
         newCells[newIndex(i, j)] = isAlive(i, j);
       }
     }
@@ -177,9 +182,9 @@ class GridWorld {
   /// Copy this as a counter-clockwise 90 degree rotation.
   GridWorld counterClockwise90() {
     final newCells = List<bool>(_numRows * _numCols);
-    final newIndex = (int i, int j) => ((_numCols - 1 - j) * _numRows) + i;
-    for (int i = 0; i < _numRows; i++) {
-      for (int j = 0; j < _numCols; j++) {
+    int newIndex(int i, int j) => ((_numCols - 1 - j) * _numRows) + i;
+    for (var i = 0; i < _numRows; i++) {
+      for (var j = 0; j < _numCols; j++) {
         newCells[newIndex(i, j)] = isAlive(i, j);
       }
     }
@@ -192,9 +197,9 @@ class GridWorld {
   /// This world won't grow to fit.  If other world is too big or too far
   /// 'down' or 'right' it will overwrite cells due to boundary wrapping.
   void _paste(final int cI, final int cJ, final GridWorld other) {
-    for (int i = 0; i < other.nRows; i++) {
-      final int tI = (cI + i) % _numRows;
-      for (int j = 0; j < other.nCols; j++) {
+    for (var i = 0; i < other.nRows; i++) {
+      final tI = (cI + i) % _numRows;
+      for (var j = 0; j < other.nCols; j++) {
         _cells[index(tI, (cJ + j) % _numCols)] = other.isAlive(i, j);
       }
     }
@@ -256,10 +261,10 @@ class GridWorld {
   /// Throws exception if world is already too big to fit.
   GridWorld expandToFit(int width, int height) {
     if (_numCols > width) {
-      throw ArgumentError("world too wide ($_numCols) to expand into $width");
+      throw ArgumentError('world too wide ($_numCols) to expand into $width');
     }
     if (_numRows > height) {
-      throw ArgumentError("world too tall ($_numRows) to expand into $height");
+      throw ArgumentError('world too tall ($_numRows) to expand into $height');
     }
     final padW = _padding(width, _numCols);
     final padH = _padding(height, _numRows);
@@ -271,9 +276,9 @@ class GridWorld {
 
   /// Fit actual into limit, with padding on both sides.
   static Tuple2<int, int> _padding(int limit, int actual) {
-    final int diff = limit - actual;
-    assert(diff >= 0);
-    final int half = diff ~/ 2;
+    final diff = limit - actual;
+    assert(diff >= 0, 'bad fit');
+    final half = diff ~/ 2;
     return (diff % 2 == 0)
         ? Tuple2<int, int>(half, half)
         : Tuple2<int, int>(half, half + 1);
@@ -281,14 +286,14 @@ class GridWorld {
 
   /// Take N life steps.
   void takeSteps(Evolver e, int n) {
-    for (int i = 0; i < n; i++) {
+    for (var i = 0; i < n; i++) {
       takeStep(e);
     }
   }
 
   /// Take one step in the life of the world.
   void takeStep(Evolver e) {
-    final List<bool> newCells = List<bool>(nRows * nCols);
+    final newCells = List<bool>(nRows * nCols);
     for (var i = 0; i < nRows; i++) {
       for (var j = 0; j < nCols; j++) {
         newCells[index(i, j)] = e.aliveAtNextStep(this, i, j);

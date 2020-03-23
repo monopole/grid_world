@@ -127,7 +127,7 @@ void main() {
   });
 
   test('counterClockwise90', () {
-    var w = halfArrow.counterClockwise90();
+    final w = halfArrow.counterClockwise90();
     expect(w.toString(), equals('''
 ..#...
 .##...
@@ -145,7 +145,7 @@ void main() {
   });
 
   test('clockwise90', () {
-    var w = halfArrow.clockwise90();
+    final w = halfArrow.clockwise90();
     expect(w.toString(), equals('''
 ......
 ......
@@ -187,12 +187,12 @@ void main() {
   });
 
   test('copy', () {
-    var w = halfArrow.copy();
+    final w = halfArrow.copy();
     expect(w, equals(halfArrow));
   });
 
   test('leftPadded', () {
-    var w = halfArrow.padLeft(2);
+    final w = halfArrow.padLeft(2);
     expect(w.toString(), equals('''
 ....#..
 ....##.
@@ -204,7 +204,7 @@ void main() {
   });
 
   test('rightPadded', () {
-    var w = halfArrow.padRight(2);
+    final w = halfArrow.padRight(2);
     expect(w.toString(), equals('''
 ..#....
 ..##...
@@ -216,7 +216,7 @@ void main() {
   });
 
   test('lrPadded', () {
-    var w = halfArrow.lrPadded(2);
+    final w = halfArrow.lrPadded(2);
     expect(w.toString(), equals('''
 ....#....
 ....##...
@@ -228,7 +228,7 @@ void main() {
   });
 
   test('topPadded', () {
-    var w = halfArrow.padTop(2);
+    final w = halfArrow.padTop(2);
     expect(w.toString(), equals('''
 .....
 .....
@@ -242,7 +242,7 @@ void main() {
   });
 
   test('bottomPadded', () {
-    var w = halfArrow.padBottom(2);
+    final w = halfArrow.padBottom(2);
     expect(w.toString(), equals('''
 ..#..
 ..##.
@@ -256,7 +256,7 @@ void main() {
   });
 
   test('tbPadded', () {
-    var w = halfArrow.tbPadded(2);
+    final w = halfArrow.tbPadded(2);
     expect(w.toString(), equals('''
 .....
 .....
@@ -272,7 +272,7 @@ void main() {
   });
 
   test('padded', () {
-    var w = halfArrow.padded(3);
+    final w = halfArrow.padded(3);
     expect(w.toString(), equals('''
 ...........
 ...........
@@ -290,7 +290,7 @@ void main() {
   });
 
   test('expandToFit0', () {
-    var w = blinker.expandToFit(blinker.nCols, blinker.nRows);
+    final w = blinker.expandToFit(blinker.nCols, blinker.nRows);
     expect(w, equals(blinker));
   });
 
@@ -318,7 +318,7 @@ void main() {
   });
 
   test('expandToFit2', () {
-    var w = blinker.expandToFit(8, 13);
+    final w = blinker.expandToFit(8, 13);
     expect(w.toString(), equals('''
 ........
 ........
@@ -337,7 +337,7 @@ void main() {
   });
 
   test('expandToFit3', () {
-    var w = blinker.expandToFit(5, 6);
+    final w = blinker.expandToFit(5, 6);
     expect(w.toString(), equals('''
 .....
 ..#..
@@ -412,8 +412,8 @@ void main() {
   });
 
   test('bigX', () {
-    var v = _identity06.appendRight(_identity06.clockwise90());
-    var x = v.appendBottom(v.clockwise90().clockwise90());
+    final v = _identity06.appendRight(_identity06.clockwise90());
+    final x = v.appendBottom(v.clockwise90().clockwise90());
     expect(x.toString(), equals('''
 #..........#
 .#........#.
@@ -431,9 +431,9 @@ void main() {
   });
 
   test('mixItUp1', () {
-    var r1 = halfArrow.padLeft(2).padTop(2).padBottom(3).padRight(10);
-    var r2 = r1.clockwise90().clockwise90();
-    var w = r1.appendBottom(r2);
+    final r1 = halfArrow.padLeft(2).padTop(2).padBottom(3).padRight(10);
+    final r2 = r1.clockwise90().clockwise90();
+    final w = r1.appendBottom(r2);
     expect(w.toString(), equals('''
 .................
 .................
@@ -481,8 +481,8 @@ void main() {
 
   test('mixItUp2', () {
     var w = halfArrow.padRight(2);
-    var w1 = w.appendRight(w.clockwise90());
-    var w2 = w.counterClockwise90().appendRight(w);
+    final w1 = w.appendRight(w.clockwise90());
+    final w2 = w.counterClockwise90().appendRight(w);
     w = w1.appendBottom(w2);
     expect(w.toString(), equals('''
 ..#..........
@@ -504,8 +504,8 @@ void main() {
 
   /// Check a three step iterable.
   test('gridworlditerable1', () {
-    var itr = GridWorldIterable(blinker, limit: 3).iterator;
-    assert(itr.moveNext());
+    final itr = GridWorldIterable(blinker, limit: 3).iterator;
+    assert(itr.moveNext(), 'should be more');
     expect(itr.current.toString(), equals('''
 .....
 ..#..
@@ -513,7 +513,7 @@ void main() {
 ..#..
 .....
 '''));
-    assert(itr.moveNext());
+    assert(itr.moveNext(), 'should be more');
     expect(itr.current.toString(), equals('''
 .....
 .....
@@ -521,7 +521,7 @@ void main() {
 .....
 .....
 '''));
-    assert(itr.moveNext());
+    assert(itr.moveNext(), 'should be more');
     expect(itr.current.toString(), equals('''
 .....
 ..#..
@@ -529,12 +529,12 @@ void main() {
 ..#..
 .....
 '''));
-    assert(!itr.moveNext());
+    assert(!itr.moveNext(), 'should be done');
   });
 
   /// Another iterable check, this time with snapshots to make a list.
   test('gridworlditerable2', () {
-    List<GridWorld> list = List<GridWorld>.from(
+    final list = List<GridWorld>.from(
         GridWorldIterable(blinker, limit: 3, snapshots: true));
     expect(list.length, equals(3));
     expect(list[0].toString(), equals('''

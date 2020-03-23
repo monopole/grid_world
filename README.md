@@ -1,15 +1,26 @@
 # GridWorld
 
-A cellular automaton library associated with a square grid.  Includes Conway's Game of Life.
+[GridWorld] is a cellular automaton library associated with a square grid.
+
+It includes Conway's Game of Life evolution rules, and some classic
+Conway patterns ready for injection.
 
 #### Demo
-```
+
+```bash
 git clone git@github.com:monopole/grid_world.git
-dart grid_world/example/main.dart
+cd grid_world
+pub run test
+dart example/main.dart
 ```
 
-The primary interfaces are as follows:
+#### Run tests
 
+```bash
+```
+
+## Primary interfaces
+ 
 ### `GridWorld`
 
 A `GridWorld` is a grid of cells that can be dead or alive.
@@ -18,7 +29,7 @@ A `GridWorld` can be constructed from
 
  * a multi-line string, e.g.
    ```dart
-   blinker = GridWorld.fromString('''
+   final blinker = GridWorld.fromString('''
    .....
    ..#..
    ..#..
@@ -81,3 +92,4 @@ a `GridStringer`.
 to a string with embedded ANSI escape sequences for
 animation on a terminal.
 
+[GridWorld]: https://pub.dev/packages/grid_world

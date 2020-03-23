@@ -1,3 +1,7 @@
+## 1.0.0
+
+- Fix lints, start stable release.
+
 ## 0.1.10
 
 - Fix readme.
