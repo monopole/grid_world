@@ -1,6 +1,6 @@
 # GridWorld
 
-[GridWorld] is a cellular automaton library associated with a square grid.
+[GridWorld] is a cellular automaton library associated with a rectangular grid.
 
 It includes Conway's Game of Life evolution rules, and some classic
 Conway patterns ready for injection.
@@ -36,16 +36,20 @@ A `GridWorld` can be constructed from
  * other worlds pasted into or appended to each other.
 
 The cells have no builtin rules regarding their evolution.
+For that, see `Evolver`.
 
 
 ### `Evolver`
 
-A `GridWorld` accepts an `Evolver` to push it
-through discrete evolutionary steps.
+A `GridWorld` accepts, via its `takeStep` method,
+an `Evolver`.
+
+An `Evolver` pushes a world forward in time
+per some set of evolutionary rules.
 
 A `ConwayEvolver` is an `Evolver` embodying Conway's
 GOL rules with wrap-around boundary conditions.
-This evolver defines some static instances of
+This evolver also defines some static instances of
 small `GridWorlds` containing famous Conway GOL
 patterns, e.g. the _Gosper glider gun_:
 
