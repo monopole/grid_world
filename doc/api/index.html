@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 4.1.0">
+  <meta name="description" content="grid_world API docs, for the Dart programming language.">
+  <title>grid_world - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href=""
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://github.com/monopole/grid_world">grid_world package</a></li>
+  </ol>
+  <div class="self-name">grid_world</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="gridworld">GridWorld</h1>
+<p><a href="https://pub.dev/packages/grid_world">GridWorld</a> is a cellular automaton library associated with a rectangular grid.</p>
+<p>It includes Conway's Game of Life evolution rules, and some classic
+Conway patterns ready for injection.</p>
+<pre class="language-bash"><code class="language-bash">git clone git@github.com:monopole/grid_world.git
+cd grid_world
+dart run test
+dart example/main.dart
+</code></pre>
+<h2 id="primary-interfaces">Primary interfaces</h2>
+<h3 id="gridworld-2"><code>GridWorld</code></h3>
+<p>A <code>GridWorld</code> is a grid of cells that can be dead or alive.</p>
+<p>A <code>GridWorld</code> can be constructed from</p>
+<ul>
+<li>
+<p>a multi-line string, e.g.</p>
+<pre class="language-dart"><code class="language-dart">final blinker = GridWorld.fromString('''
+.....
+..#..
+..#..
+..#..
+.....
+''');
+</code></pre>
+<p>where <code>.</code> means <em>dead</em>, and anything else means <em>alive</em>.</p>
+</li>
+<li>
+<p>other worlds pasted into or appended to each other.</p>
+</li>
+</ul>
+<p>The cells have no builtin rules regarding their evolution.
+For that, see <code>Evolver</code>.</p>
+<h3 id="evolver"><code>Evolver</code></h3>
+<p>A <code>GridWorld</code> accepts, via its <code>takeStep</code> method,
+an <code>Evolver</code>.</p>
+<p>An <code>Evolver</code> pushes a world forward in time
+per some set of evolutionary rules.</p>
+<p>A <code>ConwayEvolver</code> is an <code>Evolver</code> embodying Conway's
+GOL rules with wrap-around boundary conditions.
+This evolver also defines some static instances of
+small <code>GridWorlds</code> containing famous Conway GOL
+patterns, e.g. the <em>Gosper glider gun</em>:</p>
+<pre class="language-dart"><code class="language-dart">static final gosperGliderGun = GridWorld.fromString('''
+......................................
+.........................#............
+.......................#.#............
+.............##......##............##.
+............#...#....##............##.
+.##........#.....#...##...............
+.##........#...#.##....#.#............
+...........#.....#.......#............
+............#...#.....................
+.............##.......................
+......................................
+''');
+</code></pre>
+<h3 id="gridworlditerable"><code>GridWorldIterable</code></h3>
+<p>Extending <code>Iterable&lt;GridWorld&gt;</code>, this object combines a <code>GridWorld</code> and
+an <code>Evolver</code> such that one may evolve a world in an iteration context, e.g.</p>
+<pre class="language-dart"><code class="language-dart">for (var w in GridWorldIterable(initialWorld, limit: 1000)) {
+  render(w);
+}
+</code></pre>
+<h3 id="gridstringer"><code>GridStringer</code></h3>
+<p>A <code>GridWorld</code> can be converted to a string using
+a <code>GridStringer</code>.</p>
+<p><code>GridStringerAnsi</code> is a <code>GridStringer</code> that converts a world
+to a string with embedded ANSI escape sequences for
+animation on a terminal.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="grid_world">
+  <span class="name"><a href="grid_world/grid_world-library.html">grid_world</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="https://github.com/monopole/grid_world">grid_world package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">grid_world</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="grid_world/grid_world-library.html">grid_world</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    grid_world
+      1.0.1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+

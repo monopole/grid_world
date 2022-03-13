@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Upgrade to Dart SDK version: 2.16.1
+
 ## 1.0.1
 
 - Typo, blah

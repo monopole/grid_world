@@ -39,7 +39,7 @@ class GridWorld {
   ///
   factory GridWorld.fromString(String x) {
     final rawLines = x.split('\n');
-    final lines = List<List<int>>();
+    final lines = List<List<int>>.empty(growable: true);
     for (final line in rawLines) {
       if (line.isNotEmpty) {
         lines.add(line.codeUnits);
@@ -56,7 +56,8 @@ class GridWorld {
             'match length ($nC) of first line');
       }
     }
-    final list = List<bool>(nR * nC);
+    final list = List<bool>.filled(nR * nC, false);
+//    final list = <bool>[].filled(nR * nC,0);
     var k = 0;
     for (final line in lines) {
       for (final ch in line) {
@@ -157,7 +158,7 @@ class GridWorld {
 
   /// Copy this as a transpose.
   GridWorld transpose() {
-    final newCells = List<bool>(_numRows * _numCols);
+    final newCells = List<bool>.filled(_numRows * _numCols, false);
     int newIndex(int j, int i) => (j * _numRows) + i;
     for (var i = 0; i < _numRows; i++) {
       for (var j = 0; j < _numCols; j++) {
@@ -169,7 +170,7 @@ class GridWorld {
 
   /// Copy this as a clockwise 90 degree rotation.
   GridWorld clockwise90() {
-    final newCells = List<bool>(_numRows * _numCols);
+    final newCells = List<bool>.filled(_numRows * _numCols, false);
     int newIndex(int i, int j) => (j * _numRows) + (_numRows - 1 - i);
     for (var i = 0; i < _numRows; i++) {
       for (var j = 0; j < _numCols; j++) {
@@ -181,7 +182,7 @@ class GridWorld {
 
   /// Copy this as a counter-clockwise 90 degree rotation.
   GridWorld counterClockwise90() {
-    final newCells = List<bool>(_numRows * _numCols);
+    final newCells = List<bool>.filled(_numRows * _numCols, false);
     int newIndex(int i, int j) => ((_numCols - 1 - j) * _numRows) + i;
     for (var i = 0; i < _numRows; i++) {
       for (var j = 0; j < _numCols; j++) {
@@ -293,7 +294,7 @@ class GridWorld {
 
   /// Take one step in the life of the world.
   void takeStep(Evolver e) {
-    final newCells = List<bool>(nRows * nCols);
+    final newCells = List<bool>.filled(nRows * nCols, false);
     for (var i = 0; i < nRows; i++) {
       for (var j = 0; j < nCols; j++) {
         newCells[index(i, j)] = e.aliveAtNextStep(this, i, j);

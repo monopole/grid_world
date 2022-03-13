@@ -4,7 +4,7 @@ import 'grid_world.dart';
 /// An [Evolver] that embodies Conway's Game of Life rules.
 class ConwayEvolver extends Evolver {
   // Avoid passing the world to all helper methods.
-  GridWorld _w;
+  late GridWorld _w;
 
   /// Returns true if the GridWorld cell at {i,j} should be alive
   /// after the next time step.

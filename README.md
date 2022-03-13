@@ -8,7 +8,7 @@ Conway patterns ready for injection.
 ```bash
 git clone git@github.com:monopole/grid_world.git
 cd grid_world
-pub run test
+dart run test
 dart example/main.dart
 ```
 

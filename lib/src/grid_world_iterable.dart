@@ -13,7 +13,7 @@ import 'grid_world.dart';
 class GridWorldIterable extends Iterable<GridWorld> {
   /// Make a iterable with reasonable defaults.
   GridWorldIterable(this._gw, {this.limit = 50, this.snapshots = false})
-      : assert(_gw != null && limit >= 0, 'needs a world and postive limit');
+      : assert(limit >= 0, 'needs a world and positive limit');
 
   final GridWorld _gw;
 
@@ -36,7 +36,7 @@ class GridWorldIterable extends Iterable<GridWorld> {
 class _GridWorldIterator extends Iterator<GridWorld> {
   // ignore: avoid_positional_boolean_parameters
   _GridWorldIterator(this._gw, this._ev, this._limit, this._snapshots)
-      : assert(_gw != null && _ev != null && _limit >= 0, 'bad args');
+      : assert(_limit >= 0, 'bad args');
 
   int _count = 0;
   final int _limit;
